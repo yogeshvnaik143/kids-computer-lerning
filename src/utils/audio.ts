@@ -1,6 +1,16 @@
 // Sound effects and speech synthesis for Kannada and English
 
 let audioCtx: AudioContext | null = null;
+let isMuted: boolean = false;
+
+export const setGlobalMute = (muted: boolean) => {
+  isMuted = muted;
+  if (muted && 'speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+  }
+};
+
+export const getGlobalMute = (): boolean => isMuted;
 
 function getAudioContext(): AudioContext {
   if (!audioCtx) {
@@ -15,6 +25,7 @@ function getAudioContext(): AudioContext {
 
 // Procedural sound effects using Web Audio API
 export const playSound = (type: 'pop' | 'click' | 'correct' | 'wrong' | 'fanfare' | 'camera' | 'tv' | 'whoosh') => {
+  if (isMuted) return;
   try {
     const ctx = getAudioContext();
     const now = ctx.currentTime;
@@ -122,6 +133,11 @@ export const playSound = (type: 'pop' | 'click' | 'correct' | 'wrong' | 'fanfare
 
 // Web Speech API Voice synthesis helper
 export const speakText = (text: string, lang: 'kn' | 'en' = 'en', onEnd?: () => void) => {
+  if (isMuted) {
+    if (onEnd) onEnd();
+    return;
+  }
+
   if (!('speechSynthesis' in window)) {
     if (onEnd) onEnd();
     return;
