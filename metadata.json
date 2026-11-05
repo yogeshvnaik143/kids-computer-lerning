@@ -1,0 +1,6 @@
+{
+  "name": "Digi Pravesha - Learn Computer for Class 1 & 2 (Kannada & English)",
+  "description": "Interactive bilingual computer learning portal for Class 1 & 2 students in Kannada and English, featuring Ganu & Robo Raju, voice-guided lessons, 3D interactive computer lab, touch vs click simulators, Tux Paint, and fun games.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
